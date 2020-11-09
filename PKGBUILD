@@ -18,8 +18,7 @@ build() {
 	./tensorflow/lite/tools/make/download_dependencies.sh
 	bazel build //tensorflow/lite/c:libtensorflowlite_c.so # C Shared Library
 	bazel build //tensorflow/lite:libtensorflowlite.so	   # C++ Shared library
-	make -j `nproc` -C . -f tensorflow/lite/tools/make/Makefile
-	# ./tensorflow/lite/tools/make/build_lib.sh # C++ Static Library
+	make -j `nproc` -C . -f tensorflow/lite/tools/make/Makefile # C++ Static Library
 }
 
 package() {
@@ -29,7 +28,7 @@ package() {
 	mkdir -p $pkgdir/usr/lib/
 	install -C bazel-bin/tensorflow/lite/libtensorflowlite.so "$pkgdir/usr/lib"	
 	install -C bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so "$pkgdir/usr/lib"	
-	install -C tensorflow/lite/tools/make/gen/linux_$ARCH/lib/libtensorflow-lite.a "$pkgdir/usr/lib"	
+	install -C tensorflow/lite/tools/make/gen/linux_$ARCH/lib/libtensorflow-lite.a "$pkgdir/usr/lib"
 	
 	cd tensorflow/lite/
 	HEADERS=$(find . -name \*.h)
